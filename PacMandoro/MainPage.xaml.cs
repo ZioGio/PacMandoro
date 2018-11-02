@@ -28,8 +28,8 @@ namespace PacMandoro
         private const string BreakEndSoundFile = "ms-appx:///Assets/Pac-Man_Eat_Ghost.wav";
         private DispatcherTimer timer;
         private int timeRemaining;
-        private int taskTime = 10; // 25 minutes 1500
-        private int breakTime = 11; // 5 minutes 300
+        private int taskTime = 1500; // 25 minutes 
+        private int breakTime = 300; // 5 minutes 
         private string resourceString;
         private TimeSpan ts;
 
@@ -237,7 +237,7 @@ namespace PacMandoro
             TaskScreenGrid.Visibility = Visibility.Collapsed;
             TimerScreenGrid.Visibility = Visibility.Visible;
 
-            if (TaskListView.Items.Count > 0)
+            if (TaskListView.Items.Count > 0 && TaskListView.SelectedItem != null)
             {
                 ItemNameTextBlock.Text = TaskListView.SelectedItem.ToString();
             }
@@ -335,11 +335,7 @@ namespace PacMandoro
         private void StopTimer_Click(object sender, RoutedEventArgs e)
         {
             timer.Stop();
-
-            if (BreakProgressBar.Visibility != Visibility.Visible)
-            {
-                ShowFinishedButton();
-            }
+            ShowFinishedButton();
 
             StartTimerString("Resume/Content");
 

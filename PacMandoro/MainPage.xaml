@@ -34,7 +34,7 @@
     -->
 
     <!-- Layout Root -->
-    <Grid x:Name="LayoutRootGrid">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />

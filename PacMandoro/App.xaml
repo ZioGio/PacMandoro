@@ -76,6 +76,17 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
                             <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                                <ContentPresenter
+                                    x:Name="ContentPresenter"
+                                    Padding="{TemplateBinding Padding}"
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    AutomationProperties.AccessibilityView="Raw"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    ContentTransitions="{TemplateBinding ContentTransitions}" />
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal">
@@ -112,17 +123,6 @@
                                         </VisualState>
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
-                                <ContentPresenter
-                                    x:Name="ContentPresenter"
-                                    Padding="{TemplateBinding Padding}"
-                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    AutomationProperties.AccessibilityView="Raw"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    Content="{TemplateBinding Content}"
-                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                    ContentTransitions="{TemplateBinding ContentTransitions}" />
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
@@ -143,40 +143,6 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="ProgressBar">
                             <Grid>
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualStateGroup.Transitions>
-                                            <VisualTransition From="Updating" To="Determinate">
-                                                <Storyboard>
-                                                    <RepositionThemeAnimation FromHorizontalOffset="{Binding TemplateSettings.IndicatorLengthDelta, RelativeSource={RelativeSource Mode=TemplatedParent}}" TargetName="ProgressBarIndicator" />
-                                                </Storyboard>
-                                            </VisualTransition>
-                                            <VisualTransition From="Paused" To="Determinate">
-                                                <Storyboard>
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProgressBarIndicator"
-                                                        Storyboard.TargetProperty="Opacity"
-                                                        To="1"
-                                                        Duration="0:0:0.25" />
-                                                </Storyboard>
-                                            </VisualTransition>
-                                            <VisualTransition From="Indeterminate" To="Determinate">
-                                                <Storyboard>
-                                                    <FadeInThemeAnimation TargetName="EllipseGrid" />
-                                                </Storyboard>
-                                            </VisualTransition>
-                                        </VisualStateGroup.Transitions>
-                                        <VisualState x:Name="Determinate" />
-                                        <VisualState x:Name="Updating" />
-                                        <VisualState x:Name="Indeterminate" />
-                                        <VisualState x:Name="Error">
-                                            <VisualState.Setters>
-                                                <Setter Target="ProgressBarIndicator.Opacity" Value="0" />
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                        <VisualState x:Name="Paused" />
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
                                 <Border
                                     x:Name="DeterminateRoot"
                                     Background="{TemplateBinding Background}"
@@ -209,26 +175,6 @@
                                         </Image>
                                     </StackPanel>
                                 </Border>
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
-            <Style x:Key="PacManBreakProgressBarStyle" TargetType="ProgressBar">
-                <Setter Property="Foreground" Value="Transparent" />
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="BorderThickness" Value="{ThemeResource ProgressBarBorderThemeThickness}" />
-                <Setter Property="BorderBrush" Value="Transparent" />
-                <Setter Property="MinHeight" Value="{ThemeResource ProgressBarThemeMinHeight}" />
-                <Setter Property="IsTabStop" Value="False" />
-                <Setter Property="VerticalAlignment" Value="Top" />
-                <!-- Setting MinWidth to small number allows it to stretch to Grid width -->
-                <Setter Property="MinWidth" Value="1" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="ProgressBar">
-                            <Grid>
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualStateGroup.Transitions>
@@ -263,6 +209,26 @@
                                         <VisualState x:Name="Paused" />
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="PacManBreakProgressBarStyle" TargetType="ProgressBar">
+                <Setter Property="Foreground" Value="Transparent" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="{ThemeResource ProgressBarBorderThemeThickness}" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+                <Setter Property="MinHeight" Value="{ThemeResource ProgressBarThemeMinHeight}" />
+                <Setter Property="IsTabStop" Value="False" />
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <!-- Setting MinWidth to small number allows it to stretch to Grid width -->
+                <Setter Property="MinWidth" Value="1" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ProgressBar">
+                            <Grid>
                                 <Border
                                     x:Name="DeterminateRoot"
                                     Background="{TemplateBinding Background}"
@@ -288,6 +254,40 @@
                                         </Image>
                                     </StackPanel>
                                 </Border>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition From="Updating" To="Determinate">
+                                                <Storyboard>
+                                                    <RepositionThemeAnimation FromHorizontalOffset="{Binding TemplateSettings.IndicatorLengthDelta, RelativeSource={RelativeSource Mode=TemplatedParent}}" TargetName="ProgressBarIndicator" />
+                                                </Storyboard>
+                                            </VisualTransition>
+                                            <VisualTransition From="Paused" To="Determinate">
+                                                <Storyboard>
+                                                    <DoubleAnimation
+                                                        Storyboard.TargetName="ProgressBarIndicator"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        To="1"
+                                                        Duration="0:0:0.25" />
+                                                </Storyboard>
+                                            </VisualTransition>
+                                            <VisualTransition From="Indeterminate" To="Determinate">
+                                                <Storyboard>
+                                                    <FadeInThemeAnimation TargetName="EllipseGrid" />
+                                                </Storyboard>
+                                            </VisualTransition>
+                                        </VisualStateGroup.Transitions>
+                                        <VisualState x:Name="Determinate" />
+                                        <VisualState x:Name="Updating" />
+                                        <VisualState x:Name="Indeterminate" />
+                                        <VisualState x:Name="Error">
+                                            <VisualState.Setters>
+                                                <Setter Target="ProgressBarIndicator.Opacity" Value="0" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Paused" />
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
@@ -327,6 +327,16 @@
                                                         Background="{ThemeResource TextBoxButtonBackgroundThemeBrush}"
                                                         BorderBrush="{ThemeResource TextBoxButtonBorderThemeBrush}"
                                                         BorderThickness="{TemplateBinding BorderThickness}">
+                                                        <TextBlock
+                                                            x:Name="GlyphElement"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            AutomationProperties.AccessibilityView="Raw"
+                                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                            FontSize="12"
+                                                            FontStyle="Normal"
+                                                            Foreground="{ThemeResource SystemControlForegroundChromeBlackMediumBrush}"
+                                                            Text="&#xE10A;" />
                                                         <VisualStateManager.VisualStateGroups>
                                                             <VisualStateGroup x:Name="CommonStates">
                                                                 <VisualState x:Name="Normal" />
@@ -348,16 +358,6 @@
                                                                 </VisualState>
                                                             </VisualStateGroup>
                                                         </VisualStateManager.VisualStateGroups>
-                                                        <TextBlock
-                                                            x:Name="GlyphElement"
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            AutomationProperties.AccessibilityView="Raw"
-                                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                            FontSize="12"
-                                                            FontStyle="Normal"
-                                                            Foreground="{ThemeResource SystemControlForegroundChromeBlackMediumBrush}"
-                                                            Text="&#xE10A;" />
                                                     </Grid>
                                                 </ControlTemplate>
                                             </Setter.Value>
@@ -372,42 +372,6 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Disabled">
-                                            <VisualState.Setters>
-                                                <Setter Target="HeaderContentPresenter.Foreground" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}" />
-                                                <Setter Target="BackgroundElement.Background" Value="{ThemeResource SystemControlDisabledTransparentBrush}" />
-                                                <Setter Target="BorderElement.Background" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}" />
-                                                <Setter Target="BorderElement.BorderBrush" Value="{ThemeResource SystemControlDisabledBaseLowBrush}" />
-                                                <Setter Target="ContentElement.Foreground" Value="{ThemeResource SystemControlDisabledChromeDisabledLowBrush}" />
-                                                <Setter Target="PlaceholderTextContentPresenter.Foreground" Value="{ThemeResource SystemControlDisabledChromeDisabledLowBrush}" />
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                        <VisualState x:Name="Normal" />
-                                        <VisualState x:Name="PointerOver">
-                                            <VisualState.Setters>
-                                                <Setter Target="BackgroundElement.BorderBrush" Value="{ThemeResource PacManBrush}" />
-                                                <Setter Target="BorderElement.BorderBrush" Value="{ThemeResource PacManBrush}" />
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                        <VisualState x:Name="Focused">
-                                            <VisualState.Setters>
-                                                <Setter Target="PlaceholderTextContentPresenter.Foreground" Value="{ThemeResource SystemControlPageTextChromeBlackMediumLowBrush}" />
-                                                <Setter Target="BackgroundElement.BorderBrush" Value="{ThemeResource BlueNeonBrush}" />
-                                                <Setter Target="BorderElement.BorderBrush" Value="{ThemeResource BlueNeonBrush}" />
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                    <VisualStateGroup x:Name="ButtonStates">
-                                        <VisualState x:Name="ButtonVisible">
-                                            <VisualState.Setters>
-                                                <Setter Target="DeleteButton.Visibility" Value="Visible" />
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                        <VisualState x:Name="ButtonCollapsed" />
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
                                 <Border
                                     x:Name="BackgroundElement"
                                     Grid.Row="1"
@@ -475,6 +439,42 @@
                                     IsTabStop="False"
                                     Style="{StaticResource DeleteButtonStyle}"
                                     Visibility="Collapsed" />
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Disabled">
+                                            <VisualState.Setters>
+                                                <Setter Target="HeaderContentPresenter.Foreground" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}" />
+                                                <Setter Target="BackgroundElement.Background" Value="{ThemeResource SystemControlDisabledTransparentBrush}" />
+                                                <Setter Target="BorderElement.Background" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}" />
+                                                <Setter Target="BorderElement.BorderBrush" Value="{ThemeResource SystemControlDisabledBaseLowBrush}" />
+                                                <Setter Target="ContentElement.Foreground" Value="{ThemeResource SystemControlDisabledChromeDisabledLowBrush}" />
+                                                <Setter Target="PlaceholderTextContentPresenter.Foreground" Value="{ThemeResource SystemControlDisabledChromeDisabledLowBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="PointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Target="BackgroundElement.BorderBrush" Value="{ThemeResource PacManBrush}" />
+                                                <Setter Target="BorderElement.BorderBrush" Value="{ThemeResource PacManBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Focused">
+                                            <VisualState.Setters>
+                                                <Setter Target="PlaceholderTextContentPresenter.Foreground" Value="{ThemeResource SystemControlPageTextChromeBlackMediumLowBrush}" />
+                                                <Setter Target="BackgroundElement.BorderBrush" Value="{ThemeResource BlueNeonBrush}" />
+                                                <Setter Target="BorderElement.BorderBrush" Value="{ThemeResource BlueNeonBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="ButtonStates">
+                                        <VisualState x:Name="ButtonVisible">
+                                            <VisualState.Setters>
+                                                <Setter Target="DeleteButton.Visibility" Value="Visible" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="ButtonCollapsed" />
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>

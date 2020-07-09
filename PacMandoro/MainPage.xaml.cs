@@ -28,8 +28,8 @@ namespace PacMandoro
         private const string BreakEndSoundFile = "ms-appx:///Assets/Pac-Man_Eat_Ghost.wav";
         private DispatcherTimer timer;
         private int timeRemaining;
-        private int taskTime = 1500; // 25 minutes 
-        private int breakTime = 300; // 5 minutes 
+        private readonly int taskTime = 15; // seconds 
+        private readonly int breakTime = 10; // seconds 
         private string resourceString;
         private TimeSpan ts;
 

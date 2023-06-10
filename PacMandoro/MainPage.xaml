@@ -1,0 +1,385 @@
+﻿<Page
+    x:Class="PacMandoro.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PacMandoro"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Storyboard x:Name="StartScreenStoryboard">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="StartScreenStep1TextBlock" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="00:00:02" Value="Visible" />
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="StartScreenStep2TextBlock" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="00:00:04" Value="Visible" />
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="StartScreenStep3TextBlock" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="00:00:06" Value="Visible" />
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="StartScreenStep4TextBlock" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="00:00:08" Value="Visible" />
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="StartScreenPlayButtonStackPanel" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="00:00:10" Value="Visible" />
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+    </Page.Resources>
+
+    <Page.Background>
+        <ImageBrush ImageSource="/Assets/Bitmaps/Pac-Man_Cabinet.png" Stretch="Fill" />
+    </Page.Background>
+
+    <!--
+        Divided the Page and child Grids into Columns and Rows to keep the content Grids
+        properly placed over the static background image when window size changes.  This
+        worked better than RelativePanels and StackPanels.
+    -->
+
+    <!-- Layout Root -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+
+        <!-- Start Screen -->
+        <Grid
+            x:Name="StartScreenGrid"
+            Grid.Row="1"
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Margin="0,0,0,20">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Margin="0,-40,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    x:Uid="Player1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource PacManTextBlockStyle}" />
+                <TextBlock
+                    x:Uid="HighScore"
+                    Grid.Column="1"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource PacManTextBlockStyle}" />
+                <TextBlock
+                    x:Uid="Player2"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource PacManTextBlockStyle}" />
+                <TextBlock
+                    x:Uid="StartScreenTitle"
+                    Grid.ColumnSpan="3"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource PacManTextBlockStyle}" />
+            </Grid>
+            <TextBlock
+                x:Name="StartScreenStep1TextBlock"
+                x:Uid="StartScreenStep1"
+                Grid.Row="1"
+                Width="{Binding ElementName=StartScreenGrid}"
+                Foreground="{ThemeResource BlinkyBrush}"
+                Style="{StaticResource PacManTextBlockStyle}"
+                Visibility="Collapsed" />
+            <TextBlock
+                x:Name="StartScreenStep2TextBlock"
+                x:Uid="StartScreenStep2"
+                Grid.Row="2"
+                Width="{Binding ElementName=StartScreenGrid}"
+                Foreground="{ThemeResource PinkyBrush}"
+                Style="{StaticResource PacManTextBlockStyle}"
+                Visibility="Collapsed" />
+            <TextBlock
+                x:Name="StartScreenStep3TextBlock"
+                x:Uid="StartScreenStep3"
+                Grid.Row="3"
+                Width="{Binding ElementName=StartScreenGrid}"
+                Foreground="{ThemeResource InkyBrush}"
+                Style="{StaticResource PacManTextBlockStyle}"
+                Visibility="Collapsed" />
+            <TextBlock
+                x:Name="StartScreenStep4TextBlock"
+                x:Uid="StartScreenStep4"
+                Grid.Row="4"
+                Width="{Binding ElementName=StartScreenGrid}"
+                Foreground="{ThemeResource ClydeBrush}"
+                Style="{StaticResource PacManTextBlockStyle}"
+                Visibility="Collapsed" />
+            <StackPanel
+                x:Name="StartScreenPlayButtonStackPanel"
+                Grid.Row="5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Orientation="Horizontal"
+                Visibility="Collapsed">
+                <Image
+                    Width="20"
+                    Height="20"
+                    VerticalAlignment="Center"
+                    Source="/Assets/Bitmaps/Pac-Man_Cherries.png" />
+                <Button
+                    x:Name="StartScreenPlayButton"
+                    x:Uid="GetStarted"
+                    VerticalAlignment="Center"
+                    Click="StartScreenPlayButton_Click"
+                    Foreground="{ThemeResource PacManBrush}"
+                    Style="{StaticResource PacManButtonStyle}" />
+                <Image
+                    Width="20"
+                    Height="20"
+                    VerticalAlignment="Center"
+                    RenderTransformOrigin="0.5,0.5"
+                    Source="/Assets/Bitmaps/Pac-Man_Cherries.png" />
+            </StackPanel>
+            <TextBlock
+                x:Uid="Credit0"
+                Grid.Row="6"
+                Width="{Binding ElementName=StartScreenGrid}"
+                VerticalAlignment="Bottom"
+                Style="{StaticResource PacManTextBlockStyle}"
+                Visibility="Visible" />
+        </Grid>
+
+        <!-- Task Screen -->
+        <Grid
+            x:Name="TaskScreenGrid"
+            Grid.Row="1"
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Margin="0,0,0,20"
+            Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition Height="2*" />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid Margin="0,-40,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    x:Uid="Player1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource PacManTextBlockStyle}" />
+                <TextBlock
+                    x:Uid="HighScore"
+                    Grid.Column="1"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource PacManTextBlockStyle}" />
+                <TextBlock
+                    x:Uid="Player2"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource PacManTextBlockStyle}" />
+            </Grid>
+            <TextBox
+                x:Name="TaskTextBox"
+                Grid.Row="1"
+                KeyDown="TaskTextBox_KeyDown"
+                Style="{StaticResource PacManTextBoxStyle}" />
+            <TextBlock
+                x:Uid="TaskListHeader"
+                Grid.Row="2"
+                FontStyle="Italic"
+                Style="{StaticResource PacManTextBlockStyle}" />
+            <ListView
+                x:Name="TaskListView"
+                Grid.Row="3"
+                VerticalAlignment="Top"
+                IsItemClickEnabled="True"
+                ItemContainerStyle="{StaticResource PacManListViewItemStyle}"
+                SelectionChanged="TaskListView_SelectionChanged"
+                SelectionMode="Single">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Foreground="{ThemeResource PacManBrush}" Style="{StaticResource PacManTextBlockStyle}" Text="{Binding}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="RemoveTaskButton"
+                    VerticalAlignment="Bottom"
+                    Click="RemoveTaskButton_Click"
+                    Style="{StaticResource PacManButtonStyle}">
+                    <TextBlock x:Uid="DeleteTask" Style="{StaticResource PacManTextBlockStyle}" />
+                </Button>
+                <Button
+                    x:Name="GoToTimerButton"
+                    Grid.Column="1"
+                    VerticalAlignment="Bottom"
+                    Click="GoToTimerButton_Click"
+                    Style="{StaticResource PacManButtonStyle}">
+                    <TextBlock x:Uid="GoToTimer" Style="{StaticResource PacManTextBlockStyle}" />
+                </Button>
+            </Grid>
+            <TextBlock
+                x:Name="CreditsTextBlock"
+                x:Uid="Credit0"
+                Grid.Row="5"
+                Width="{Binding ElementName=TaskScreenGrid}"
+                VerticalAlignment="Bottom"
+                Style="{StaticResource PacManTextBlockStyle}" />
+        </Grid>
+
+        <!-- Timer Screen -->
+        <Grid
+            x:Name="TimerScreenGrid"
+            Grid.Row="1"
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Margin="0,0,0,20"
+            Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid Margin="0,-40,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    x:Uid="Player1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource PacManTextBlockStyle}" />
+                <TextBlock
+                    x:Uid="HighScore"
+                    Grid.Column="1"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource PacManTextBlockStyle}" />
+                <TextBlock
+                    x:Uid="Player2"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource PacManTextBlockStyle}" />
+                <TextBlock
+                    x:Name="ItemNameTextBlock"
+                    Grid.ColumnSpan="3"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource InkyBrush}"
+                    Style="{StaticResource PacManTextBlockStyle}" />
+            </Grid>
+            <Button
+                x:Name="TaskFinishedButton"
+                Grid.Row="1"
+                Width="{Binding ElementName=TimerScreenGrid}"
+                Margin="0"
+                Click="TaskFinishedButton_Click"
+                Foreground="{ThemeResource PacManBrush}"
+                Style="{StaticResource PacManButtonStyle}"
+                Visibility="Collapsed">
+                <Button.Content>
+                    <TextBlock x:Uid="Finished" TextAlignment="Center" TextWrapping="WrapWholeWords" />
+                </Button.Content>
+            </Button>
+            <TextBlock
+                x:Name="TimerTextBlock"
+                Grid.Row="1"
+                Width="{Binding ElementName=TimerScreenGrid}"
+                FontSize="60"
+                Style="{StaticResource PacManTitleTextBlockStyle}" />
+            <TextBlock
+                x:Name="ReadyTextBlock"
+                x:Uid="Ready"
+                Grid.Row="2"
+                Width="{Binding ElementName=TimerScreenGrid}"
+                Foreground="{ThemeResource PacManBrush}"
+                Style="{StaticResource PacManTitleTextBlockStyle}"
+                Visibility="Collapsed" />
+            <ProgressBar
+                x:Name="TaskProgressBar"
+                Grid.Row="2"
+                Width="{Binding ElementName=TimerScreenGrid}"
+                Style="{StaticResource PacManTaskProgressBarStyle}"
+                Visibility="Collapsed">
+                <ProgressBar.Background>
+                    <ImageBrush ImageSource="/Assets/Bitmaps/Pac-Man_Dots.png" Stretch="None" />
+                </ProgressBar.Background>
+            </ProgressBar>
+            <ProgressBar
+                x:Name="BreakProgressBar"
+                Grid.Row="2"
+                Width="{Binding ElementName=TimerScreenGrid}"
+                RenderTransformOrigin="0.5,0.5"
+                Style="{StaticResource PacManBreakProgressBarStyle}"
+                Visibility="Collapsed">
+                <ProgressBar.RenderTransform>
+                    <ScaleTransform ScaleX="-1" />
+                </ProgressBar.RenderTransform>
+            </ProgressBar>
+            <Grid Grid.Row="3" Width="{Binding ElementName=TimerScreenGrid}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Button
+                    x:Name="StartTimerButton"
+                    x:Uid="Start"
+                    Click="StartTimer_Click"
+                    Style="{StaticResource PacManButtonStyle}" />
+                <Button
+                    x:Name="StopTimerButton"
+                    x:Uid="Stop"
+                    Grid.Column="1"
+                    Click="StopTimer_Click"
+                    Style="{StaticResource PacManButtonStyle}" />
+                <Button
+                    x:Name="RestartTimerButton"
+                    x:Uid="Restart"
+                    Grid.Row="1"
+                    Click="RestartTimerButton_Click"
+                    Style="{StaticResource PacManButtonStyle}" />
+                <Button
+                    x:Name="SkipTimerButton"
+                    x:Uid="Skip"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Click="SkipTimerButton_Click"
+                    Style="{StaticResource PacManButtonStyle}" />
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
+

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
-using Windows.Media.Core;
-using Windows.Media.Playback;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -20,12 +20,12 @@ namespace PacMandoro
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private const string StartNowAnnounceSoundFile = "ms-appx:///Assets/WavFiles/Pac-Man_Eat_Fruit.wav";
-        private const string AddDeleteTasksSoundFile = "ms-appx:///Assets/WavFiles/Insert_Coin.wav";
-        private const string TaskBeginningSoundFile = "ms-appx:///Assets/WavFiles/Pac-Man_Beginning.wav";
-        private const string TaskEndSoundFile = "ms-appx:///Assets/WavFiles/Pac-Man_Death.wav";
-        private const string BreakBeginningSoundFile = "ms-appx:///Assets/WavFiles/Pac-Man_Intermission.wav";
-        private const string BreakEndSoundFile = "ms-appx:///Assets/WavFiles/Pac-Man_Eat_Ghost.wav";
+        private const string PacManEatFruitSoundFile = "Pac-Man_Eat_Fruit.wav";
+        private const string PacManInsertCoinSoundFile = "Insert_Coin.wav";
+        private const string PacManBeginningSoundFile = "Pac-Man_Beginning.wav";
+        private const string PacManDeathSoundFile = "Pac-Man_Death.wav";
+        private const string PacManIntermissionSoundFile = "Pac-Man_Intermission.wav";
+        private const string PacManEatGhostSoundFile = "Pac-Man_Eat_Ghost.wav";
         private DispatcherTimer timer;
         private int timeRemaining;
         private readonly int taskTime = 15; // seconds 
@@ -44,42 +44,6 @@ namespace PacMandoro
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
         }
 
-        private void Play(string fileName)
-        {
-            MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.Source = MediaSource.CreateFromUri(new Uri($"{fileName}", UriKind.RelativeOrAbsolute));
-            mediaPlayer.Play();
-        }
-
-        // Sounds
-        #region Sounds
-        private async Task StartScreenTextReveal()
-        {
-            StartScreenStoryboard.Begin();
-            await Task.Delay(9750); // 9.75 seconds
-        }
-
-        private async Task AddDeleteTasksSound()
-        {
-            Play(AddDeleteTasksSoundFile);
-            ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
-            resourceString = resourceLoader.GetString("Credit/Text");
-            CreditsTextBlock.Text = resourceString + "   " + TaskListView.Items.Count.ToString();
-            await Task.Delay(1250); // 1.25 seconds
-        }
-
-        private async Task TaskBeginningSound()
-        {
-            Play(TaskBeginningSoundFile);
-            await Task.Delay(4500);  // 4.5 seconds
-        }
-
-        private void BreakBeginningSound()
-        {
-            Play(BreakBeginningSoundFile);
-        }
-        #endregion
-
         // Start Screen
         #region Start Screen
         private async void StartScreen_Loaded(object sender, RoutedEventArgs e)
@@ -91,12 +55,11 @@ namespace PacMandoro
 
             // Start text animation
             await StartScreenTextReveal();
-            Play(StartNowAnnounceSoundFile);
         }
 
-        private void StartScreenPlayButton_Click(object sender, RoutedEventArgs e)
+        private async void StartScreenPlayButton_Click(object sender, RoutedEventArgs e)
         {
-            //await AddDeleteTasksSound();
+            await InsertCoinSound();
             InitializeTaskScreen();
         }
         #endregion
@@ -125,7 +88,7 @@ namespace PacMandoro
                 TaskTextBox.Text = "";
                 TaskListView.SelectedIndex = 0;
                 EnableTaskButtons();
-                await AddDeleteTasksSound();
+                await InsertCoinSound();
             }
         }
 
@@ -133,7 +96,7 @@ namespace PacMandoro
         {
             TaskListView.Items.Remove(TaskListView.SelectedItem);
             EnableTaskButtons();
-            await AddDeleteTasksSound();
+            await InsertCoinSound();
         }
 
         private void GoToTimerButton_Click(object sender, RoutedEventArgs e)
@@ -269,7 +232,7 @@ namespace PacMandoro
 
             if (TaskProgressBar.Visibility == Visibility.Visible && timeRemaining == 0)
             {
-                Play(TaskEndSoundFile);
+                PacManDeathSound();
                 await Task.Delay(1000);  // 1 second 
 
                 TaskProgressBar.Visibility = Visibility.Collapsed;
@@ -286,7 +249,7 @@ namespace PacMandoro
 
             if (BreakProgressBar.Visibility == Visibility.Visible && timeRemaining == 0)
             {
-                Play(BreakEndSoundFile);
+                PacManEatGhostSound();
                 await Task.Delay(1000);  // 1 second 
 
                 BreakProgressBar.Visibility = Visibility.Collapsed;
@@ -315,14 +278,14 @@ namespace PacMandoro
             if (timeRemaining == taskTime && TaskProgressBar.Visibility == Visibility.Collapsed && BreakProgressBar.Visibility == Visibility.Collapsed)
             {
                 ReadyTextBlock.Visibility = Visibility.Visible;
-                await TaskBeginningSound();
+                await PacManBeginningSound();
                 ReadyTextBlock.Visibility = Visibility.Collapsed;
                 TaskProgressBar.Visibility = Visibility.Visible;
             }
 
             if (timeRemaining == breakTime && TaskProgressBar.Visibility == Visibility.Collapsed && BreakProgressBar.Visibility == Visibility.Collapsed)
             {
-                BreakBeginningSound();
+                PacManIntermissionSound();
                 BreakProgressBar.Visibility = Visibility.Visible;
             }
 
@@ -377,6 +340,58 @@ namespace PacMandoro
             TaskListView.Items.Remove(TaskListView.SelectedItem);
             InitializeTimerScreen();
             InitializeTaskScreen();
+        }
+        #endregion
+
+        // Sounds
+        #region Sounds
+        private async void Play(string fileName)
+        {
+            MediaElement mediaElement = new MediaElement();
+            StorageFolder folder = await Package.Current.InstalledLocation.GetFolderAsync("Assets\\WavFiles");
+            StorageFile file = await folder.GetFileAsync(fileName);
+            var stream = await file.OpenAsync(FileAccessMode.Read);
+            mediaElement.SetSource(stream, file.ContentType);
+            mediaElement.Play();
+        }
+
+        private async Task StartScreenTextReveal()
+        {
+            StartScreenStoryboard.Begin();
+            await Task.Delay(9750); // 9.75 seconds
+
+            Play(PacManEatFruitSoundFile);
+        }
+
+        private async Task InsertCoinSound()
+        {
+            Play(PacManInsertCoinSoundFile);
+
+            ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
+            resourceString = resourceLoader.GetString("Credit/Text");
+            CreditsTextBlock.Text = resourceString + "   " + TaskListView.Items.Count.ToString();
+            await Task.Delay(1250); // 1.25 seconds
+        }
+
+        private async Task PacManBeginningSound()
+        {
+            Play(PacManBeginningSoundFile);
+            await Task.Delay(4500);  // 4.5 seconds 
+        }
+
+        private void PacManDeathSound()
+        {
+            Play(PacManDeathSoundFile);
+        }
+
+        private void PacManIntermissionSound()
+        {
+            Play(PacManIntermissionSoundFile);
+        }
+
+        private void PacManEatGhostSound()
+        {
+            Play(PacManEatGhostSoundFile);
         }
         #endregion
     }

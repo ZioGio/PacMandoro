@@ -98,7 +98,7 @@
                 x:Name="StartScreenStep1TextBlock"
                 x:Uid="StartScreenStep1"
                 Grid.Row="1"
-                Width="{Binding ElementName=StartScreenGrid}"
+                Width="{Binding ElementName=StartScreenGrid, Path=Width}"
                 Foreground="{ThemeResource BlinkyBrush}"
                 Style="{StaticResource PacManTextBlockStyle}"
                 Visibility="Collapsed" />
@@ -106,7 +106,7 @@
                 x:Name="StartScreenStep2TextBlock"
                 x:Uid="StartScreenStep2"
                 Grid.Row="2"
-                Width="{Binding ElementName=StartScreenGrid}"
+                Width="{Binding ElementName=StartScreenGrid, Path=Width}"
                 Foreground="{ThemeResource PinkyBrush}"
                 Style="{StaticResource PacManTextBlockStyle}"
                 Visibility="Collapsed" />
@@ -114,7 +114,7 @@
                 x:Name="StartScreenStep3TextBlock"
                 x:Uid="StartScreenStep3"
                 Grid.Row="3"
-                Width="{Binding ElementName=StartScreenGrid}"
+                Width="{Binding ElementName=StartScreenGrid, Path=Width}"
                 Foreground="{ThemeResource InkyBrush}"
                 Style="{StaticResource PacManTextBlockStyle}"
                 Visibility="Collapsed" />
@@ -122,7 +122,7 @@
                 x:Name="StartScreenStep4TextBlock"
                 x:Uid="StartScreenStep4"
                 Grid.Row="4"
-                Width="{Binding ElementName=StartScreenGrid}"
+                Width="{Binding ElementName=StartScreenGrid, Path=Width}"
                 Foreground="{ThemeResource ClydeBrush}"
                 Style="{StaticResource PacManTextBlockStyle}"
                 Visibility="Collapsed" />
@@ -155,7 +155,7 @@
             <TextBlock
                 x:Uid="Credit0"
                 Grid.Row="6"
-                Width="{Binding ElementName=StartScreenGrid}"
+                Width="{Binding ElementName=StartScreenGrid, Path=Width}"
                 VerticalAlignment="Bottom"
                 Style="{StaticResource PacManTextBlockStyle}"
                 Visibility="Visible" />
@@ -249,7 +249,7 @@
                 x:Name="CreditsTextBlock"
                 x:Uid="Credit0"
                 Grid.Row="5"
-                Width="{Binding ElementName=TaskScreenGrid}"
+                Width="{Binding ElementName=TaskScreenGrid, Path=Width}"
                 VerticalAlignment="Bottom"
                 Style="{StaticResource PacManTextBlockStyle}" />
         </Grid>
@@ -300,7 +300,7 @@
             <Button
                 x:Name="TaskFinishedButton"
                 Grid.Row="1"
-                Width="{Binding ElementName=TimerScreenGrid}"
+                Width="{Binding ElementName=TimerScreenGrid, Path=Width}"
                 Margin="0"
                 Click="TaskFinishedButton_Click"
                 Foreground="{ThemeResource PacManBrush}"
@@ -313,21 +313,21 @@
             <TextBlock
                 x:Name="TimerTextBlock"
                 Grid.Row="1"
-                Width="{Binding ElementName=TimerScreenGrid}"
+                Width="{Binding ElementName=TimerScreenGrid, Path=Width}"
                 FontSize="60"
                 Style="{StaticResource PacManTitleTextBlockStyle}" />
             <TextBlock
                 x:Name="ReadyTextBlock"
                 x:Uid="Ready"
                 Grid.Row="2"
-                Width="{Binding ElementName=TimerScreenGrid}"
+                Width="{Binding ElementName=TimerScreenGrid, Path=Width}"
                 Foreground="{ThemeResource PacManBrush}"
                 Style="{StaticResource PacManTitleTextBlockStyle}"
                 Visibility="Collapsed" />
             <ProgressBar
                 x:Name="TaskProgressBar"
                 Grid.Row="2"
-                Width="{Binding ElementName=TimerScreenGrid}"
+                Width="{Binding ElementName=TimerScreenGrid, Path=Width}"
                 Style="{StaticResource PacManTaskProgressBarStyle}"
                 Visibility="Collapsed">
                 <ProgressBar.Background>
@@ -337,7 +337,7 @@
             <ProgressBar
                 x:Name="BreakProgressBar"
                 Grid.Row="2"
-                Width="{Binding ElementName=TimerScreenGrid}"
+                Width="{Binding ElementName=TimerScreenGrid, Path=Width}"
                 RenderTransformOrigin="0.5,0.5"
                 Style="{StaticResource PacManBreakProgressBarStyle}"
                 Visibility="Collapsed">
@@ -345,7 +345,7 @@
                     <ScaleTransform ScaleX="-1" />
                 </ProgressBar.RenderTransform>
             </ProgressBar>
-            <Grid Grid.Row="3" Width="{Binding ElementName=TimerScreenGrid}">
+            <Grid Grid.Row="3" Width="{Binding ElementName=TimerScreenGrid, Path=Width}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />

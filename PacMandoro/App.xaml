@@ -156,21 +156,21 @@
                                             Fill="{TemplateBinding Foreground}" />
                                         <!-- Clyde -->
                                         <!-- Overlap is intentional; otherwise set left margin to -180 -->
-                                        <Image Width="60" Height="60" Margin="-120,0,0,0">
+                                        <Image Margin="-120,0,0,0" Stretch="None">
                                             <Image.Source>
-                                                <BitmapImage AutoPlay="True" UriSource="Assets\Bitmaps\Pac-Man_Clyde.gif" />
+                                                <BitmapImage UriSource="ms-appx:///Assets/Bitmaps/Pac-Man_Clyde.gif" DecodePixelWidth="60" DecodePixelHeight="60" />
                                             </Image.Source>
                                         </Image>
                                         <!-- Blinky -->
-                                        <Image Width="60" Height="60" Margin="-60,0,0,0">
+                                        <Image Margin="-60,0,0,0" Stretch="None">
                                             <Image.Source>
-                                                <BitmapImage AutoPlay="True" UriSource="Assets\Bitmaps\Pac-Man_Blinky.gif" />
+                                                <BitmapImage UriSource="ms-appx:///Assets/Bitmaps/Pac-Man_Blinky.gif" DecodePixelWidth="60" DecodePixelHeight="60" />
                                             </Image.Source>
                                         </Image>
                                         <!-- Pac-Man -->
-                                        <Image Width="60" Height="60">
+                                        <Image Stretch="None">
                                             <Image.Source>
-                                                <BitmapImage AutoPlay="True" UriSource="Assets\Bitmaps\Pac-Man.gif" />
+                                                <BitmapImage UriSource="ms-appx:///Assets/Bitmaps/Pac-Man.gif" DecodePixelWidth="60" DecodePixelHeight="60" />
                                             </Image.Source>
                                         </Image>
                                     </StackPanel>
@@ -241,15 +241,15 @@
                                             HorizontalAlignment="Left"
                                             Fill="{TemplateBinding Foreground}" />
                                         <!-- Pac-Man -->
-                                        <Image Width="60" Height="60" Margin="-60,0,0,0">
+                                        <Image Margin="-60,0,0,0" Stretch="None">
                                             <Image.Source>
-                                                <BitmapImage AutoPlay="True" UriSource="Assets\Bitmaps\Pac-Man.gif" />
+                                                <BitmapImage UriSource="ms-appx:///Assets/Bitmaps/Pac-Man.gif" DecodePixelWidth="60" DecodePixelHeight="60" />
                                             </Image.Source>
                                         </Image>
                                         <!-- Blue Ghost -->
-                                        <Image Width="60" Height="60">
+                                        <Image Stretch="None">
                                             <Image.Source>
-                                                <BitmapImage AutoPlay="True" UriSource="Assets\Bitmaps\Pac-Man_Blue_Ghost.gif" />
+                                                <BitmapImage UriSource="ms-appx:///Assets/Bitmaps/Pac-Man_Blue_Ghost.gif" DecodePixelWidth="60" DecodePixelHeight="60" />
                                             </Image.Source>
                                         </Image>
                                     </StackPanel>

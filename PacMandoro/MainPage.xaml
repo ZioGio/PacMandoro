@@ -28,7 +28,11 @@
     </Page.Resources>
 
     <Page.Background>
-        <ImageBrush ImageSource="/Assets/Bitmaps/Pac-Man_Cabinet.png" Stretch="Fill" />
+        <ImageBrush Stretch="Fill">
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="ms-appx:///Assets/Bitmaps/Pac-Man_Cabinet.png" />
+            </ImageBrush.ImageSource>
+        </ImageBrush>
     </Page.Background>
 
     <!--
@@ -133,11 +137,11 @@
                 VerticalAlignment="Top"
                 Orientation="Horizontal"
                 Visibility="Collapsed">
-                <Image
-                    Width="20"
-                    Height="20"
-                    VerticalAlignment="Center"
-                    Source="/Assets/Bitmaps/Pac-Man_Cherries.png" />
+                <Image VerticalAlignment="Center" Stretch="None">
+                    <Image.Source>
+                        <BitmapImage UriSource="ms-appx:///Assets/Bitmaps/Pac-Man_Cherries.png" DecodePixelWidth="20" DecodePixelHeight="20" />
+                    </Image.Source>
+                </Image>
                 <Button
                     x:Name="StartScreenPlayButton"
                     x:Uid="GetStarted"
@@ -145,12 +149,11 @@
                     Click="StartScreenPlayButton_Click"
                     Foreground="{ThemeResource PacManBrush}"
                     Style="{StaticResource PacManButtonStyle}" />
-                <Image
-                    Width="20"
-                    Height="20"
-                    VerticalAlignment="Center"
-                    RenderTransformOrigin="0.5,0.5"
-                    Source="/Assets/Bitmaps/Pac-Man_Cherries.png" />
+                <Image VerticalAlignment="Center" Stretch="None">
+                    <Image.Source>
+                        <BitmapImage UriSource="ms-appx:///Assets/Bitmaps/Pac-Man_Cherries.png" DecodePixelWidth="20" DecodePixelHeight="20" />
+                    </Image.Source>
+                </Image>
             </StackPanel>
             <TextBlock
                 x:Uid="Credit0"

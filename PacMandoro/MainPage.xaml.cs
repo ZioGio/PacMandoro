@@ -347,6 +347,7 @@ namespace PacMandoro
         #region Sounds
         private async void Play(string fileName)
         {
+            // I tried MediaPlayerElement and MediaPlayer, but both had noticeable delays compared to MediaElement
             MediaElement mediaElement = new MediaElement();
             StorageFolder folder = await Package.Current.InstalledLocation.GetFolderAsync("Assets\\WavFiles");
             StorageFile file = await folder.GetFileAsync(fileName);
